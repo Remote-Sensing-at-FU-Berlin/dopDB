@@ -1,6 +1,6 @@
 # dopDB
 
-> ![WARNING]
+> [!WARNING]
 > The entire ingest process can take a considerable amount of time. Plan accordingly!
 
 ## Create database
