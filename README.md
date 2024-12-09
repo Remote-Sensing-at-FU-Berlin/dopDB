@@ -26,7 +26,7 @@ psql -d digital_ortho_images -U postgres -h localhost -p 5432 -f sql/create_tabl
 
 After successful creation of the tables, ingest both the metadata and filenpaths. Please note that in its current configuration, the csv file containing the tile metadata is expected to have a header while the csv file containing absoulte filenames (one per row) is not.
 
-> [!INFO]
+> [!CAUTION]
 > Note however, that the table is not distributed with this repository and the path argument in the respective SQL file needs adjustment!
 
 ```bash
