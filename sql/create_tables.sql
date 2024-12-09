@@ -6,9 +6,9 @@
 CREATE TABLE public.metadata
 (
     tile character varying,
-    year integer,
-    month integer,
-    day integer,
+    year integer default NULL,
+    month integer default NULL,
+    day integer default NULL,
     PRIMARY KEY (tile)
 );
 

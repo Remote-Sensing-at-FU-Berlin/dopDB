@@ -15,9 +15,6 @@ psql -d digital_ortho_images -U postgres -h localhost -p 5432 -f sql/create_data
 
 To create the main table containing that will hold all raster data in the end as well as a metadata table (currently) containing both the tile ID as well as the sampling datatables, execute the command below.
 
-> [!CAUTION]
-> Not all sensing could be extracted from the original ortho images. Thus, roughly 3000 tiles are missing.
-
 ```bash
 psql -d digital_ortho_images -U postgres -h localhost -p 5432 -f sql/create_tables.sql
 ```
@@ -25,6 +22,7 @@ psql -d digital_ortho_images -U postgres -h localhost -p 5432 -f sql/create_tabl
 ## Ingest data
 
 After successful creation of the tables, ingest both the metadata and filenpaths. Please note that in its current configuration, the csv file containing the tile metadata is expected to have a header while the csv file containing absoulte filenames (one per row) is not.
+Not all sensing could be extracted from the original ortho images. Thus, roughly 3000 tiles are *missing*. However, because of the foreign key constraint, the metadata file still needs to be *complete* and contain empty values for year, month and date.
 
 > [!CAUTION]
 > Note however, that the table is not distributed with this repository and the path argument in the respective SQL file needs adjustment!
@@ -33,8 +31,7 @@ After successful creation of the tables, ingest both the metadata and filenpaths
 psql -d digital_ortho_images -U postgres -h localhost -p 5432 -f sql/ingest.sql
 ```
 
-> [!NOTE]
-> An earlier version used the script `raster2pgqsl` ([here](https://postgis.net/docs/using_raster_dataman.html) or [here](https://postgis.net/workshops/de/postgis-intro/rasters.html) for installation and usage information) to ingest data. However, using this approach under Windows resulted in huge SQL files with the raster data stored as base64-encoded strings or the constraint that data is stored outside of the database itself. At the time of writing, the script is only used to generate the SQL statements requried to setup the tables correctly.
+An earlier version used the script `raster2pgqsl` ([here](https://postgis.net/docs/using_raster_dataman.html) or [here](https://postgis.net/workshops/de/postgis-intro/rasters.html) for installation and usage information) to ingest data. However, using this approach under Windows resulted in huge SQL files with the raster data stored as base64-encoded strings or the constraint that data is stored outside of the database itself. At the time of writing, the script is only used to generate the SQL statements requried to setup the tables correctly.
 
 > [!TIP]
 > Depending on how GDAL and its bindings are installed on your machine, you may need to set the environment variable "PROJ_LIB". Under Windows, the respective path may be found under `C:\Program Files\QGIS <version>\share\proj`.
