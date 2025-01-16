@@ -24,6 +24,22 @@ psql -d digital_ortho_images -U postgres -h localhost -p 5432 -f sql/create_tabl
 After successful creation of the tables, ingest both the metadata and filenpaths. Please note that in its current configuration, the csv file containing the tile metadata is expected to have a header while the csv file containing absoulte filenames (one per row) is not.
 Not all sensing could be extracted from the original ortho images. Thus, roughly 3000 tiles are *missing*. However, because of the foreign key constraint, the metadata file still needs to be *complete* and contain empty values for year, month and date.
 
+The CSV-files containing metadata and raster paths should look like the tables below:
+
+```raw
+tile,year,month,day
+dop_33250-5886,2023,5,8
+dop_33250-5887,2023,5,8
+dop_33250-5888,2023,5,8
+dop_33250-5889,2023,5,8
+```
+
+```raw
+E:\pringles\AS\dop_33319-5792_AS_3_4472666-3224919-4496026-3254919.tif
+E:\pringles\AS\dop_33319-5792_AS_4_4472666-3224919-4496026-3254919.tif
+E:\pringles\AS\dop_33319-5792_AS_5_4472666-3224919-4496026-3254919.tif
+```
+
 > [!CAUTION]
 > Note however, that the table is not distributed with this repository and the path argument in the respective SQL file needs adjustment!
 
